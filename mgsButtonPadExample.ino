@@ -47,15 +47,9 @@ void setColor(int l, int r, int g, int b) {
 }
 
 void loop() {
-  //if (ready)
-  //Serial.print(digitalRead(7));
-  blank();
-  mode = random(2);
+  blank();  
   digitalWrite(_SCK_Pin, HIGH);
   digitalWrite(_CS_Pin, HIGH);
-  //  setColor(light1Counter, random(red), random(green), random(blue));
-  //  setColor(random(red), random(green), random(blue), 1);
-  Serial.println("X: " + String(xCounter) + "\n" + "Y: " + String(yCounter) + "\n");
   delay(240);
 
   // Set lights: 3 x 16 bytes
@@ -77,7 +71,7 @@ void loop() {
     ready = true;
   }
 
-  delayMicroseconds(400);
+  //delayMicroseconds(400);
 }
 
 void setLights(){
