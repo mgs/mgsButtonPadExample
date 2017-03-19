@@ -61,7 +61,8 @@ void loop() {
   }
 
   if(ready)readButtons();
-
+  handleButtonPress();
+  
   digitalWrite(_CS_Pin, LOW);
 
   // After the second cycle, get ready to read new button presses.
@@ -133,4 +134,71 @@ byte readByte() {
   return result;
 }
 
+void handleButtonPress(){
+  switch(currentButton){
+    case 0:
+      // Do Stuff For Button 0
+      
+    break;
+    case 1:
+      // Do Stuff For Button 1
+      
+    break;
+    case 2:
+      // Do Stuff For Button 2
+      
+    break;
+    case 3:
+      // Do Stuff For Button 3
+      
+    break;
+    case 4:
+      // Do Stuff For Button 4
+      
+    break;
+    case 5:
+      // Do Stuff For Button 5
+      
+    break;
+    case 6:
+      // Do Stuff For Button 6
+      
+    break;
+    case 7:
+      // Do Stuff For Button 7
+      
+    break;
+    case 8:
+      // Do Stuff For Button 8
+      
+    break;
+    case 9:
+      // Do Stuff For Button 9
+      
+    break;
+    case 10:
+      // Do Stuff For Button 10
+      
+    break;
+    case 11:
+      // Do Stuff For Button 11
+      
+    break;
+    case 12:
+      // Do Stuff For Button 12
+      
+    break;
+    case 13:
+      // Do Stuff For Button 13
+      
+    break;
+    case 14:
+      // Do Stuff For Button 14
+      
+    break;
+    case 15:
+      // Do Stuff For Button 15
+      
+    break;
+  }
 
