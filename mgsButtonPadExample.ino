@@ -4,31 +4,18 @@ int _MISO_Pin = 11;
 int _MOSI_Pin = 12;
 int _SCK_Pin = 13;
 
-int red = 0;
-int green = 1;
-int blue = 255;
-
+int currentButton = -1;
 // Frame buffer for lights
 int lights = 16;
 int depth = 3;
 byte buf[16][3];
 
-int yCounter = 0;
-int xCounter = 0;
-
-int light1Counter = 0;
-int light2Counter = 15;
-int light3Counter = 4;
-int light4Counter = 11;
-
-int maxX = 16;
-int maxY = 3;
-
-int mainMode = 1;
-int mode = 1;
-
 boolean wait = false;
 boolean ready = true;
+
+int red = 0;
+int green = 1;
+int blue = 1;
 
 void setup() {
   pinMode(_CS_Pin, OUTPUT);
@@ -66,216 +53,13 @@ void loop() {
   mode = random(2);
   digitalWrite(_SCK_Pin, HIGH);
   digitalWrite(_CS_Pin, HIGH);
-  setColor(light1Counter, random(red), random(green), random(blue));
-  switch (mainMode) {
-    case 0:
-      if (light1Counter < 15) {
-        light1Counter++;
-      } else {
-        light1Counter = 0;
-      }
-    case 1:
-      switch (mode) {
-        case 0:
-          if (millis() % 20 != 0) {
-            tone(9   , random(1000, 1100), 2);
-            green = 255;
-            blue = 0;
-            red = 0;
-          } else {
-            blue = 255;
-            green = 255;
-            red = 255;
-            for (int i = 0; i < 10; i++) {
-              tone(9   , random(800, 900), 10);
-              delay(1);
-            }
-          }
-          if (light1Counter < 15) {
-            light1Counter++;
-          } else {
-            light1Counter = 0;
-          }
-          break;
-        case 1:
-          if (millis() % 10 == 0) {
-            tone(9   , random(1000, 1100), 2);
-            green = 255;
-            blue = 0;
-            red = 0;
-          } else {
-            blue = 255;
-            green = 0;
-            red = 0;
-            tone(9   , random(800, 900), 1);
-          }
-          if (light1Counter > 0) {
-            light1Counter--;
-          } else {
-            light1Counter = 15;
-          }
-          break;
-      }
-      if (random(100) > 50) {
-        setColor(light3Counter, random(red), random(green), random(blue));
-        switch (mode) {
-          case 0:
-            if (millis() % random(20) != 0) {
-              tone(9   , random(1000, 1100), 2);
-              green = 255;
-              blue = 0;
-              red = 0;
-            } else {
-              blue = 255;
-              green = 255;
-              red = 255;
-              for (int i = 0; i < 10; i++) {
-                tone(9   , random(800, 900), 10);
-                delay(1);
-              }
-            }
-            if (light3Counter < 15) {
-              light3Counter++;
-            } else {
-              light3Counter = 0;
-            }
-            break;
-          case 1:
-            if (millis() % random(10) == 0) {
-              tone(9   , random(1000, 1100), 2);
-              green = 255;
-              blue = 0;
-              red = 0;
-            } else {
-              blue = 255;
-              green = 0;
-              red = 0;
-              tone(9   , random(800, 900), 1);
-            }
-            if (light3Counter > 0) {
-              light3Counter--;
-            } else {
-              light3Counter = 15;
-            }
-            break;
-        }
-      }
-      if (random(100) > 50) {
-        switch (mode) {
-          case 0:
-            if (millis() % random(20) != 0) {
-              tone(9   , random(100, 400), 20);
-              green = 255;
-              blue = 0;
-              red = 0;
-            } else {
-              blue = 255;
-              green = 255;
-              red = 255;
-              for (int i = 0; i < 10; i++) {
-                tone(9   , random(400, 800), 20);
-                delay(1);
-              }
-            }
-            if (light4Counter < 15) {
-              light4Counter++;
-            } else {
-              light4Counter = 0;
-            }
-            break;
-          case 1:
-            if (millis() % random(10) == 0) {
-              tone(9   , random(1000, 1100), 2);
-              green = 255;
-              blue = 0;
-              red = 0;
-            } else {
-              blue = 255;
-              green = 0;
-              red = 0;
-              tone(9   , random(800, 900), 1);
-            }
-            if (light4Counter > 0) {
-              light4Counter--;
-            } else {
-              light4Counter = 15;
-            }
-            break;
-        }
-        
-      }
-      //setColor(light2Counter, random(red), random(green), random(blue));
-      switch (mode) {
-        case 0:
-          if (millis() % 2 == 0) {
-            tone(9   , random(100, 200), 1000);
-            green = 255;
-            blue = 0;
-            red = 0;
-
-          } else {
-            tone(9   , random(200, 300), 1);
-            blue = 255;
-            green = 0;
-            red = 0;
-
-          }
-          if (light2Counter > 0) {
-            light2Counter--;
-          } else {
-            light2Counter = 15;
-          }
-          break;
-        case 1:
-          if (millis() % 2 == 0) {
-            tone(9   , random(0, 100), 1000);
-            green = 0;
-            blue = 255;
-            red = 0;
-
-          } else {
-            tone(9   , random(400, 500), 1);
-            blue = 255;
-            green = 0;
-            red = 0;
-
-          }
-          if (light2Counter < 15) {
-            light2Counter++;
-          } else {
-            light2Counter = 0;
-          }
-          break;
-      }
-      setColor(light2Counter, random(red), random(green), random(blue));
-      break;
-  }
+  //  setColor(light1Counter, random(red), random(green), random(blue));
+  //  setColor(random(red), random(green), random(blue), 1);
   Serial.println("X: " + String(xCounter) + "\n" + "Y: " + String(yCounter) + "\n");
   delay(240);
-    if (random(10) > 5) {
-      for (int i = 0; i < random(10); i++) {
-        //setColor(random(4), random(13), random(red), random(green), random(blue));
-  
-        //      tone(9, random(880, 1340), 1);
-        //      delay(50);
-        //      tone(9, random(880, 1340), 1);
-        //      delay(50);
-  
-        delay(random(90));
-      }
-    } else {
-      for (int i = 0; i < random(10); i++) {
-        //setColor(random(4), random(13), random(red), random(green), random(blue));
-        delay(random(90));
-      }
-    }
 
   // Set lights: 3 x 16 bytes
-  for (int d = 0; d < depth; d++) {
-    for (int l = 0; l < lights; l++) {
-      writeByte(buf[l][d]);
-    }
-  }
+  setLights();
 
   if (!ready) {
     wait = true;
@@ -286,7 +70,7 @@ void loop() {
 
   digitalWrite(_CS_Pin, LOW);
 
-  // After the second cycle, get ready to read new button clicks.
+  // After the second cycle, get ready to read new button presses.
   if (wait) {
     delay(500);
     wait = false;
@@ -296,53 +80,30 @@ void loop() {
   delayMicroseconds(400);
 }
 
-void readButtons(){
-    // Read the buttons: 16 bytes.
-  for (int l = 0; l < lights; l++) {
-    // readByte returns a non-zero value when a button is pressed.
-    byte b = readByte();
-
-    // If a button is pressed, change the color.
-    if (b > 0 && ready && !wait) {
-      if      (buf[l][2] > 0) {
-        buf[l][2] = 0;
-        tone(9, random(220, 440), 1);
-        delay(50);
-        tone(9   , random(440, 880), 1);
-        delay(50);
-      } else if (buf[l][1] > 0) {
-        buf[l][1] = 0;
-        buf[l][2] = 255;
-        tone(9, random(440, 880), 1);
-        delay(50);
-        tone(9, random(220, 440), 1);
-        delay(50);
-      } else if (buf[l][0] > 0) {
-        buf[l][0] = 0;
-        buf[l][1] = 255;
-        tone(9, random(880, 1340), 1);
-        delay(50);
-        tone(9, random(880, 1340), 1);
-        delay(50);
-      } else {
-        buf[l][0] = 255;
-        tone(9, random(880, 1340), 1);
-        delay(50);
-        tone(9, random(880, 1340), 1);
-        delay(50);
-      }
-
-      Serial.print("Button ");
-      Serial.print(l);
-      Serial.print(": ");
-      Serial.print((int)b);
-      Serial.println();
-
-      // Change colours slowly.
-      ready = false;
+void setLights(){
+  for (int d = 0; d < depth; d++) {
+    for (int l = 0; l < lights; l++) {
+      writeByte(buf[l][d]);
     }
   }
 }
+
+void readButtons(){
+  // Read the buttons: 16 bytes.
+  for (int l = 0; l < lights; l++) {
+    // readByte returns a non-zero value when a button is pressed.
+    byte b = readByte();
+    currentButton = int(l);
+    // If a button is pressed, change the color.
+    Serial.print("Button ");
+    Serial.print(l);
+    Serial.print(": ");
+    Serial.println(int(b));
+
+    ready = false;
+  }
+}
+
 
 // Write out a byte.
 // This is for a single colour channel, for a single button.
@@ -377,3 +138,5 @@ byte readByte() {
 
   return result;
 }
+
+
